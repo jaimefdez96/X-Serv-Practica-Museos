@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bosco</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+    <div class="container">
+    <div class="titleblock">
+        <h1>Bosco</h1>
+        <h4>Museos de Madrid a un click</h4>
+    </div>
+    <div>
+        <ul class="navbar">
+            <li><a href="/" class="style5 nav">Home</a></li>
+            <li><a href="/museos" class="style5 nav">Museos</a></li>
+            <li><a href="/about" class="style5 nav style1">About</a></li>
+            <li><a href="/{{usuario}}" class="style5 nav style1">Usuario</a></li>
+        </ul>
+    </div>
+        {% block content %}
+        {% endblock %}
+    <div class="footer">
+    <div class="right style11">
+        <p class="style14">&copy; 2018 MisMuseos utiliza datos del portal de datos abiertos de la Comunidad de Madrid&nbsp;</p>
+        <p>&nbsp;</p>
+    </div>
+</body>

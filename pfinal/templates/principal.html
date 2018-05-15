@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content">
+    <ul>
+    {% for event in events %}
+        <li>{{ event.nombre }}</li>
+        <a href=/museo/{{event.id}}>Más información</a><br>
+    {% empty %}
+        <p>No hay museos disponibles</p>
+    {% endfor %}
+    </ul>
+</div>
+<!-- https://docs.djangoproject.com/en/2.0/topics/forms/ -->
+<form action ='/' method={{method}}>
+    <input type="submit" value="Accesibles">
+</form>
+{% endblock %}

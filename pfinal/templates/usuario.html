@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content">
+    <li>
+        <h2>{{ titulo }}</h2>
+    </li>
+    <ul>
+    {% for event in events %}
+        <li>{{ event.nombre }}</li>
+        <a href=/museo/{{event.id}}>Más información</a><br>
+    {% empty %}
+        <p>No hay museos disponibles</p>
+    {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
