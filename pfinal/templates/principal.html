@@ -10,8 +10,12 @@
     {% endfor %}
     </ul>
 </div>
+<form action ='/' method='POST'>
+    <input type="hidden" name="barra" value="{{events|length}}">
+    <input type="submit" value="Siguiente">
+</form>
 <!-- https://docs.djangoproject.com/en/2.0/topics/forms/ -->
 <form action ='/' method={{method}}>
-    <input type="submit" value="Accesibles">
+    <input type="submit" name="barra" value="Accesibles">
 </form>
 {% endblock %}

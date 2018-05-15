@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="content">
+  <form action="" method="POST">
+      Museos por distrito:<br>
+      {% for district in districts %}
+          <input type="radio" name="distrito" value="{{district}}" required>{{ district }}<br>
+      {% endfor %}
+      <input type="submit" value="Filtrar">
+    </form>
     <ul>
-    {% for event in events %}
+    {% for event in filt_events %}
         <li>{{ event.nombre }}</li>
         <a href=/museo/{{event.id}}>Más información</a><br>
     {% empty %}
