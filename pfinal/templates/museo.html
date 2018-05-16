@@ -4,6 +4,16 @@
     <li>
         {{ event|safe }}
     </li>
+{% if user.is_authenticated %}
+<form action ='' method='POST'>
+    <input type="hidden" name="museo" value="Like">
+    <input type="submit" value="Like">
+</form>
+<form action='' method='POST'>
+    <input type="text" name="museo" required>
+    <input type="hidden" name="usuario" value={{user.username}}>      
+    <input type="submit" value="Comentar" />
+</form> 
 </div>
-
+{% endif %}
 {% endblock %}

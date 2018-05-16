@@ -12,10 +12,21 @@
 </div>
 <form action ='/' method='POST'>
     <input type="hidden" name="barra" value="{{events|length}}">
+    <input type="hidden" name="accesible" value={{check}}>
     <input type="submit" value="Siguiente">
 </form>
 <!-- https://docs.djangoproject.com/en/2.0/topics/forms/ -->
 <form action ='/' method={{method}}>
     <input type="submit" name="barra" value="Accesibles">
 </form>
+<div class="content">
+<p>Paginas de usuarios:</p>
+    <ul>
+        {% for user in users %}
+            <li><a href=/{{user.username}}>Página de {{ user.username }}</a></li>
+        {% empty %}
+            <p>No hay usuarios registrados</p>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

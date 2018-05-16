@@ -2,16 +2,38 @@
 {% block content %}
 <div class="content">
     <li>
-        <h2>{{ titulo }}</h2>
+        {% if title %}
+            <h2>{{ title }}</h2>
+        {% else %}
+            <h2>Página de {{ userpage }}</h2>
+        {% endif %}
     </li>
     <ul>
     {% for event in events %}
         <li>{{ event.nombre }}</li>
         <a href=/museo/{{event.id}}>Más información</a><br>
     {% empty %}
-        <p>No hay museos disponibles</p>
+        <p>El usuario no ha seleccionado ningún museo</p>
     {% endfor %}
     </ul>
+    {% if user.is_authenticated %}
+    <p>Si lo desea, puede modificar los siguientes valores:</p>
+        <form action="" method="post">
+            Titulo: <input type="text" name="titulo" required>
+            <input type="hidden" name="usuario" value={{user.username}}>
+            <input type="submit" value="Modificar" />
+        </form>
+        <form action="" method="post">
+            Tamaño fuente: <input type="text" name="fuente" required>
+            <input type="hidden" name="usuario" value={{user.username}}>
+            <input type="submit" value="Modificar" />
+        </form>
+        <form action="" method="post">
+            Color de fondo: <input type="text" name="fondo" required>
+            <input type="hidden" name="usuario" value={{user.username}}>     
+            <input type="submit" value="Modificar" />
+        </form> 
+    {% endif %}
 </div>
 
 {% endblock %}
