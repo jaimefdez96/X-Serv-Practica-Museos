@@ -1,0 +1,6 @@
+Referencias:
+- https://docs.djangoproject.com/en/2.0/topics/db/queries/
+- Ordenar los museos por comentarios, obtenido de: https://docs.djangoproject.com/en/2.0/topics/db/aggregation/
+y https://docs.djangoproject.com/en/2.0/ref/models/querysets/
+- Login/Logout: https://docs.djangoproject.com/en/2.0/topics/auth/default/
+- https://docs.djangoproject.com/en/2.0/topics/forms/ 
