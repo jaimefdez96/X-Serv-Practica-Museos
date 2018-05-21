@@ -14,7 +14,7 @@ from django.contrib.auth import logout
 from django.utils import timezone
 from django.shortcuts import render_to_response
 
-
+# Funciones de ayuda
 # Para comprobar si un usuario está autenticado o no
 def check_user(request):
     if request.user.is_authenticated():
@@ -61,17 +61,18 @@ def paginas(pagina,ultimo):
         last = pagina + 5
     return(first,last)
 
-# Create your views here.
 campos_xml = ('ID-ENTIDAD','NOMBRE','DESCRIPCION-ENTIDAD','HORARIO','TRANSPORTE','ACCESIBILIDAD',
 'CONTENT-URL','NOMBRE-VIA','NUM','LOCALIDAD','CODIGO-POSTAL','DISTRITO',
 'TELEFONO','FAX','EMAIL', 'TIPO')
+
+# Comprobar la accesibilidad
 def check_acces(access):
     if access == "1":
         check = True
     else:
         check = False
     return check
-
+# Cargar museos
 def get_museos():
     parse_file = urlopen('https://datos.madrid.es/portal/site/egob/menuitem.ac61933d6ee3c31cae77ae7784f1a5a0/?vgnextoid=00149033f2201410VgnVCM100000171f5a0aRCRD&format=xml&file=0&filename=201132-0-museos&mgmtid=118f2fdbecc63410VgnVCM1000000b205a0aRCRD&preview=full')
     tree = ET.parse(parse_file)
@@ -118,6 +119,7 @@ def get_museos():
         succes = False
     return succes
 
+# Gestiono la información de un museo
 def info_museo(museo):
     info = '<br><strong>' + museo.nombre + '</strong><br>'
     info += '<strong>Descripcion: </strong>' + museo.descripcion + '<br>'
@@ -137,8 +139,11 @@ def info_museo(museo):
     return info
 
 
+# Create your views here.
+
 @csrf_exempt
 def my_login(request):
+    # Si un usuario se loggea, comprueba que esté registrado, y si no, mando error
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
@@ -157,19 +162,22 @@ def my_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+# Registration parte opcional
 @csrf_exempt
 def my_registration(request):
     template = get_template('registration.html')
-    if request.method == 'GET':
+    if request.method == 'GET': # Le devuelvo la página de registro
         return HttpResponse(template.render())
     elif request.method == 'POST':
         register_username = request.POST['username']
         register_password = request.POST['password']
         try:
+            # Si el nombre ya esta usado, se lo indico
             check = User.objects.get(username=register_username)
             c = Context({'check':check})
             return HttpResponse(template.render(c))
         except User.DoesNotExist:
+            # Si el nombre de refistro está bien, creo el usuario y lo loggeo
             user = User.objects.create_user(username=register_username,password=register_password)
             user.save()
             user = authenticate(username=register_username, password=register_password)
@@ -183,7 +191,7 @@ def my_registration(request):
 def barra(request):
     metodo = ''
     museos_all = Museo.objects.all()
-    usuario = check_user(request) #Deberia cambiarlo a visitante
+    usuario = check_user(request)
     config = Conf.objects.all()
     template = get_template('principal.html')
     c = Context({})
@@ -349,6 +357,20 @@ def usuario_xml(request,usu):
         museos_to_xml = selec_to_xml.museo.all()
         c = Context({'user':user_to_xml,'user_selecs':museos_to_xml})
         return HttpResponse(template.render(c),content_type="text/xml")
+    except User.DoesNotExist:
+        template = get_template('error.html')
+        user_error = 'No existe el usuario ' + usu
+        return HttpResponse(template.render(Context({'error':user_error})))
+
+# Canal json de usuario parte opcional
+def usuario_json(request, usu):
+    template = get_template('usuario.json')
+    try:
+        user_to_json = User.objects.get(username=usu)
+        selec_to_json = Selec.objects.get(usuario=user_to_json)
+        museos_to_json = selec_to_json.museo.all()
+        c = Context({'user':user_to_json,'museums':museos_to_json})
+        return HttpResponse(template.render(c),content_type="text/json")
     except User.DoesNotExist:
         template = get_template('error.html')
         user_error = 'No existe el usuario ' + usu
