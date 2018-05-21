@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <title>Bosco/Registration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
+    <style>
+    div.registration {
+        display: block;
+        text-align: -moz-center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    </style>
+</head>
+<div class = "registration">
+  <form method="POST" action="/registration">
+      {% if check %}
+      El nombre de usuario que ha introducido ya esta siendo usado<br>
+      Por favor, inroduzca otro<br><br>
+      {% endif %}
+      Registrate aquí<br><br>
+      <table>
+          <tr><td>Username</td>
+          <td><input type="text" name="username"></td></tr>
+          <tr><td>Password</td>
+          <td><input type="text" name="password"></td></tr>
+     </table>
+     <input type="submit" value="send" />
+  </form>
+</div>
