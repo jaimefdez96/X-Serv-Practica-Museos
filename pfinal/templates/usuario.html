@@ -1,39 +1,54 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="content">
+<div id ="mypage">
+  <div class="titleblock">
     <li>
-        {% if title %}
-            <h2>{{ title }}</h2>
-        {% else %}
-            <h2>Página de {{ userpage }}</h2>
-        {% endif %}
+        <h2>{{ title }}</h2>
     </li>
+  </div>
+  <div class="museums">
     <ul>
+    <p><strong>MisMuseos</strong></p>
     {% for event in events %}
-        <li>{{ event.nombre }}</li>
+        {{ event.nombre }}
         <a href=/museo/{{event.id}}>Más información</a><br>
     {% empty %}
         <p>El usuario no ha seleccionado ningún museo</p>
     {% endfor %}
     </ul>
-    {% if user.is_authenticated %}
+  </div>
+  <div class="forms">
+    {% if userpage.is_authenticated %}
     <p>Si lo desea, puede modificar los siguientes valores:</p>
-        <form action="" method="post">
+        <form action="" method="POST">
             Titulo: <input type="text" name="titulo" required>
-            <input type="hidden" name="usuario" value={{user.username}}>
+            <input type="hidden" name="cambio" value=Titulo>
             <input type="submit" value="Modificar" />
         </form>
-        <form action="" method="post">
-            Tamaño fuente: <input type="text" name="fuente" required>
-            <input type="hidden" name="usuario" value={{user.username}}>
+        <form action="" method="POST">
+            Tamaño fuente:<select name = "fuente">
+              <option value = "5px" selected>5px</option>
+              <option value = "10px">10px</option>
+              <option value = "20px">20px</option>
+              <option value = "25px">25px</option>
+              <option value = "15px">default</option>
+              <input type="hidden" name="cambio" value=Fuente>
+            </select>
             <input type="submit" value="Modificar" />
         </form>
-        <form action="" method="post">
-            Color de fondo: <input type="text" name="fondo" required>
-            <input type="hidden" name="usuario" value={{user.username}}>     
-            <input type="submit" value="Modificar" />
-        </form> 
+        <form action="" method="POST">
+          Color de fondo:<select name = "fondo">
+             <option value = "red" selected>red</option>
+             <option value = "green">green</option>
+             <option value = "orange">orange</option>
+             <option value = "yellow">yellow</option>
+             <option value = "gainsboro">default</option>
+             <input type="hidden" name="cambio" value=Fondo>
+          </select>
+             <input type="submit" value="Modificar" />
+        </form>
     {% endif %}
+  </div>
 </div>
 
 {% endblock %}

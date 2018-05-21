@@ -1,20 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="content">
+<div class="museums">
+  <div id="forms">
   <form action="" method="POST">
-      Museos por distrito:<br>
+      <p><strong>Museos por distrito</strong></p>
       {% for district in districts %}
           <input type="radio" name="distrito" value="{{district}}" required>{{ district }}<br>
       {% endfor %}
       <input type="submit" value="Filtrar">
-    </form>
+  </form>
+  </div>
+  <div id="events">
     <ul>
     {% for event in filt_events %}
-        <li>{{ event.nombre }}</li>
-        <a href=/museo/{{event.id}}>Más información</a><br>
+        {{ event.nombre }}: <a href=/museo/{{event.id}}>Más información</a><br>
     {% empty %}
         <p>No hay museos disponibles</p>
     {% endfor %}
     </ul>
+  </div>
 </div>
 {% endblock %}

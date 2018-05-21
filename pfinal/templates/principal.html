@@ -1,32 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="content">
-    <ul>
-    {% for event in events %}
-        <li>{{ event.nombre }}</li>
-        <a href=/museo/{{event.id}}>Más información</a><br>
-    {% empty %}
-        <p>No hay museos disponibles</p>
-    {% endfor %}
-    </ul>
-</div>
-<form action ='/' method='POST'>
-    <input type="hidden" name="barra" value="{{events|length}}">
-    <input type="hidden" name="accesible" value={{check}}>
-    <input type="submit" value="Siguiente">
-</form>
-<!-- https://docs.djangoproject.com/en/2.0/topics/forms/ -->
-<form action ='/' method={{method}}>
-    <input type="submit" name="barra" value="Accesibles">
-</form>
-<div class="content">
-<p>Paginas de usuarios:</p>
-    <ul>
-        {% for user in users %}
-            <li><a href=/{{user.username}}>Página de {{ user.username }}</a></li>
+<div class="principal">
+{% if not objects %}
+    <p> No hay museos disponibles. Cargelos pinchando aquí </p>
+    <form action ='/' method='GET'>
+        <input type="submit" name="barra" value="Cargar">
+    </form>
+{% else %}
+    <div id="events">
+        <ul>
+          <p><strong>Más comentados</strong></p>
+        {% for event in events %}
+            {{ event.nombre }},
+            C/{{event.calle}} nº{{event.numero}}, {{event.localidad}}<br>
+            <a href=/museo/{{event.id}}>Más información</a><br>
         {% empty %}
-            <p>No hay usuarios registrados</p>
+            <p>No hay museos disponibles</p>
         {% endfor %}
-    </ul>
+        </ul>
+    </div>
+    <div id="forms">
+    <form action ='/' method='POST'>
+        <input type="hidden" name="barra" value="{{page}}">
+        <input type="hidden" name="accesible" value={{check}}>
+        <input type="submit" value="Siguiente">
+    </form>
+    <!-- https://docs.djangoproject.com/en/2.0/topics/forms/ -->
+    <form action ='/' method={{method}}>
+        <input type="submit" name="barra" value="Accesibles">
+    </form>
+  </div>
+    <div id="users">
+        <ul>
+            <p><strong>Paginas de usuarios</strong></p>
+            {% for configuration in configurations %}
+                <a href=/{{configuration.usuario.username}}>{{ configuration.titulo }}</a><br>
+            {% empty %}
+                <p>No hay usuarios registrados</p>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
 </div>
 {% endblock %}

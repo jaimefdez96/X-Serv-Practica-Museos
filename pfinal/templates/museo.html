@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="content">
+<div id="museum">
     <li>
-        {{ event|safe }}
-    </li>
+        {{ info|safe }}
+    </li><br>
+    <div id="comments">
+        <strong>Comentarios</strong><br>
+        {% for comment in  comments%}
+            {{comment.fecha}}: {{comment.texto}}<br>
+        {% empty %}
+            No hay comentarios
+        {% endfor %}
+    </div>
 {% if user.is_authenticated %}
 <form action ='' method='POST'>
     <input type="hidden" name="museo" value="Like">
@@ -11,9 +19,9 @@
 </form>
 <form action='' method='POST'>
     <input type="text" name="museo" required>
-    <input type="hidden" name="usuario" value={{user.username}}>      
+    <input type="hidden" name="usuario" value={{user.username}}>
     <input type="submit" value="Comentar" />
-</form> 
-</div>
+</form>
 {% endif %}
+</div>
 {% endblock %}

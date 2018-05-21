@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="content">
+<div id="about">
     <h3>Esta página web ha sido realizada por Jaime Fernández Sánchez</h3>
     <h3>URLs:</h3>
     <ul>
@@ -8,6 +8,15 @@
         <li>/museos/: acceso a todos los museos</li>
         <li>/museo/{museo_id}: página de un determinado museo</li>
         <li>/{usuario}/: página personal de un usuario</li>
+        <li>/{usuario}/xml: xml de los museos seleccionados por un usuario</li>
+        <li>/about/: esta página</li>
+        <li>/login</li>
+        <li>/logout</li>
+        <p><strong>Funciones adicionales: </strong></p>
+        <li>/registration: página de registro</li>
+        <li>/feed/rss/: canal RSS de los comentarios del sitio</li>
+    <p>En la barra de navegación encontraras enlaces a las diferentes páginas.
+      Disfruta de la visita.</p>
     </ul>
 </div>
 {% endblock %}
