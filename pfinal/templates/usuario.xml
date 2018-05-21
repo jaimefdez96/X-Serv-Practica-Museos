@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <Contenidos>
+        <info>
+            <nombre>Museos de {{user.username}}</nombre>
+        </info>
+            {% for user_selec in user_selecs %}
+                <contenido>
+                    <atributos idioma="es">
+                        <atributo nombre="NOMBRE">{{user_selec.nombre}}</atributo>
+                        <atributo nombre="DESCRIPCION">{{user_selec.descripcion}}</atributo>
+                        <atributo nombre="HORARIO">{{user_selec.horario}}</atributo>
+                        <atributo nombre="TRANSPORTE">{{user_selec.transporte}}</atributo>
+                        <atributo nombre="ACCESIBILIDAD">{{user_selec.accesibilidad}}</atributo>
+                        <atributo nombre="URL">{{user_selec.url}}</atributo>
+                        <atributo nombre="CALLE">{{user_selec.calle}}</atributo>
+                        <atributo nombre="NUM">{{user_selec.numero}}</atributo>
+                        <atributo nombre="LOCALIDAD">{{user_selec.localidad}}</atributo>
+                        <atributo nombre="CODIGO-POSTAL">{{user_selec.codigo_postal}}</atributo>
+                        <atributo nombre="DISTRITO">{{user_selec.distrito}}</atributo>
+                        <atributo nombre="CONTACTO">
+                            <atributo nombre="TELEFONO">{{user_selec.telefono}}</atributo>
+                            <atributo nombre="FAX">{{user_selec.fax}}</atributo>
+                            <atributo nombre="EMAIL">{{user_selec.email}}</atributo>
+                        </atributo>
+                    </atributos>
+                </contenido>
+            {% endfor %}
+    </Contenidos>
