@@ -30,5 +30,6 @@ urlpatterns = patterns('',
     url(r'registration','museos.views.my_registration'),
     url(r'^feed/rss/$',myFeed()),
     url(r'(.*)/xml$','museos.views.usuario_xml'),
+    url(r'(.*)/json$','museos.views.usuario_json'),
     url(r'^(.*)$', 'museos.views.usuario')
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
