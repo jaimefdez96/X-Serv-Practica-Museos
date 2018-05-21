@@ -1,0 +1,31 @@
+{
+   "canalusuario":
+      {
+        "Canal de {{user.username}}"
+         "museos":[
+            {% for museum in museums %}{
+            "datos":{
+               "NOMBRE": "{{museum.nombre}}",
+               "DESCRIPCION": "{{museum.descripcion}}",
+               "HORARIO": "{{museum.horario}}",
+               "TRANSPORTE":"{{museum.transporte}}",
+               "ACCESIBILIDAD":"{{museum.accesibilidad}}",
+               "URL": "{{museum.url}}",
+            },
+            "direccion":{
+               "CALLE": "{{museum.calle}}",
+               "NUM":"{{museum.numero}}",
+               "LOCALIDAD":"{{museum.localidad}}",
+               "CODIGO-POSTAL":"{{museum.codigo_postal}}",
+               "DISTRITO": "{{museum.distrito}}"
+            },
+            "datoscontacto":{
+              "TELEFONO": "{{museum.telefono}}",
+              "FAX":"{{museum.fax}}",
+              "EMAIL":"{{museum.email}}",
+            }
+      },
+      {% endfor %}
+    ]
+  }
+}
