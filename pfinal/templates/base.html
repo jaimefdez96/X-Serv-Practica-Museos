@@ -62,7 +62,7 @@
         <ul class="navbar">
             <li><a href="/" class="style5 nav">Home</a></li>
             <li><a href="/museos/" class="style5 nav">Museos</a></li>
-            {% if user %}
+            {% if user and user.is_authenticated %}
                 <li><a href="/{{user.username}}" class="style5 nav style1">MiPagina</a></li>
             {% else %}
                 <li><a href="/registration" class="style5 nav style1">Registration</a></li>
