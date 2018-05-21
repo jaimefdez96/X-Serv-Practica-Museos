@@ -152,9 +152,9 @@ def my_login(request):
         return HttpResponseRedirect('/')
     else:
         template = get_template('error.html')
-        login_error = 'Te estas intentando loggear con un nombre de usuario y contraseña erroneos<br>'
-        c = Context({'error':login_error})
+        login_error = 'Te estas intentando loggear con un nombre de usuario y contraseña erroneos. '
         login_error += 'Vuelve a intentarlo o registrate si aun no lo has hecho'
+        c = Context({'error':login_error})
         return HttpResponse(template.render(c))
 
 @csrf_exempt
@@ -201,7 +201,7 @@ def barra(request):
             if not succes:
                 template = get_template('error.html')
                 load_error = 'No se han podido cargar los museos'
-                return HttpResponse(template.render(Context({'error':load_error})))
+                return HttpResponse(template.render(Context({'error':load_error,'user':usuario})))
             return HttpResponseRedirect('/')
         else:
             accesibles = False
@@ -284,7 +284,7 @@ def museo(request,num):
     except Museo.DoesNotExist:
             template = get_template('error.html')
             museum_error = 'No existe el museo al que intenta acceder'
-            return HttpResponse(template.render(Context({'error': museum_error})))
+            return HttpResponse(template.render(Context({'error': museum_error, 'user':request.user})))
 
     template = get_template('museo.html')
     c = Context({'user' : usuario,'info' : respuesta, 'comments': comentarios})
@@ -306,7 +306,7 @@ def usuario(request,usu):
     except User.DoesNotExist:
         template = get_template('error.html')
         user_error = 'No existe el usuario ' + usu
-        return HttpResponse(template.render(Context({'error':user_error})))
+        return HttpResponse(template.render(Context({'error':user_error,'user':user})))
 
     try:
         museos_de_usuario = Selec.objects.get(usuario=usuario)
@@ -334,16 +334,18 @@ def usuario(request,usu):
         config.save()
     template = get_template('usuario.html')
     if user == usuario:
-        pass
+        try:
+            user_config = Conf.objects.get(usuario = user)
+            user_color = user_config.color
+            user_size = user_config.fuente
+        except:
+            user_color = 'gainsboro'
+            user_size = '15px'
     else:
         usuario = None
-    try:
-        user_config = Conf.objects.get(usuario = user)
-        user_color = user_config.color
-        user_size = user_config.fuente
-    except:
         user_color = 'gainsboro'
         user_size = '15px'
+
     # Si el visitante de la pagina no es el usuario, no se le ofrecen las modificaciones
     c = Context({'title': config.titulo,'events': museos, 'user' : user,
     'userpage':usuario, 'color':user_color, 'size':user_size})
@@ -360,7 +362,7 @@ def usuario_xml(request,usu):
     except User.DoesNotExist:
         template = get_template('error.html')
         user_error = 'No existe el usuario ' + usu
-        return HttpResponse(template.render(Context({'error':user_error})))
+        return HttpResponse(template.render(Context({'error':user_error,'user':request.user})))
 
 # Canal json de usuario parte opcional
 def usuario_json(request, usu):
@@ -374,4 +376,4 @@ def usuario_json(request, usu):
     except User.DoesNotExist:
         template = get_template('error.html')
         user_error = 'No existe el usuario ' + usu
-        return HttpResponse(template.render(Context({'error':user_error})))
+        return HttpResponse(template.render(Context({'error':user_error, 'user':request.user})))
